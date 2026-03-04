@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phase 1 Timeline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --span: 30;
+            --line: #e2e8f0;
+            --line-strong: #cbd5e1;
+            --muted: #64748b;
+            --text: #0f172a;
+            --bg: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, .06), 0 10px 20px -4px rgba(0, 0, 0, .08);
+            --radius: 12px;
+            --radius-lg: 16px;
+            --transition: 0.2s ease;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px 16px;
+            font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            background: linear-gradient(160deg, #f1f5f9 0%, #e2e8f0 50%, #f8fafc 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .wrap {
+            max-width: 1140px;
+            margin: 0 auto;
+            background: var(--bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 24px 28px 20px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        h1 {
+            margin: 0 0 2px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
+
+        .sub {
+            margin: 0 0 16px;
+            font-size: 0.875rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .timeline {
+            padding-top: 12px;
+        }
+
+        .axis-wrap {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 0 20px;
+            margin-bottom: 20px;
+            margin-top: 0;
+            align-items: start;
+        }
+
+        .axis-wrap .axis-cell {
+            grid-column: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+        }
+
+        .axis-roles {
+            position: relative;
+            height: 16px;
+            margin-top: -6px;
+            margin-bottom: 10px;
+        }
+
+        .axis-roles .date-role {
+            position: absolute;
+            top: 0;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            user-select: none;
+        }
+
+        .axis-roles .date-role-start {
+            left: 0%;
+        }
+
+        .axis-roles .date-role-end {
+            left: 100%;
+        }
+
+        .axis {
+            position: relative;
+            height: 4px;
+            background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 50%, #cbd5e1 100%);
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+        }
+
+        .tick {
+            position: absolute;
+            top: -6px;
+            width: 2px;
+            height: 14px;
+            background: #94a3b8;
+            border-radius: 1px;
+        }
+
+        .tick::after {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #94a3b8;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+        }
+
+        .tick:first-of-type::after {
+            border-color: #1d4ed8;
+            background: #eff6ff;
+        }
+
+        .tick:last-of-type::after {
+            border-color: #1d4ed8;
+            background: #eff6ff;
+        }
+
+        .axis-dates {
+            position: relative;
+            height: 22px;
+            margin-top: 10px;
+        }
+
+        .axis-dates .date {
+            position: absolute;
+            top: 0;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            user-select: none;
+            min-width: 3em;
+        }
+
+        .rows {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px 20px;
+            align-items: center;
+        }
+
+        .rows .label {
+            padding: 4px 0;
+        }
+
+        .label {
+            font-size: 0.8125rem;
+            line-height: 1.35;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .label .hint {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .label-scope {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.7rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .label-scope span {
+            display: block;
+            margin-top: 2px;
+        }
+
+        .status-pill {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .status-pill.status-design {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-pill.status-ui {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pill.status-backend {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .status-pill.status-impl {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .track {
+            position: relative;
+            height: 28px;
+            background: #f1f5f9;
+            border-radius: 999px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: background var(--transition), box-shadow var(--transition);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);
+        }
+
+        .track:hover {
+            background: #e2e8f0;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, .06), 0 0 0 1px rgba(148, 163, 184, 0.15);
+        }
+
+        .bar {
+            position: absolute;
+            top: 2px;
+            height: calc(100% - 4px);
+            border-radius: 999px;
+            transition: opacity var(--transition), box-shadow var(--transition);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+        }
+
+        .track:hover .bar {
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+        }
+
+        /* Timeline bar colors – distinct palette (blue, emerald, amber, cyan, violet, rose) */
+        .c-foundation {
+            background: #2563eb;
+        }
+
+        .c-teams {
+            background: #059669;
+        }
+
+        .c-publish {
+            background: #b45309;
+        }
+
+        .c-tgg {
+            background: #0891b2;
+        }
+
+        .c-integrations {
+            background: #6d28d9;
+        }
+
+        .c-outbound {
+            background: #be185d;
+        }
+
+        .c-deterministic {
+            background: #0f766e;
+        }
+
+        .details {
+            margin-top: 20px;
+            border-top: 1px solid var(--line);
+            padding-top: 16px;
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius);
+            padding: 16px 18px;
+            margin-bottom: 10px;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, .04);
+        }
+
+        .card-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .card h3 {
+            margin: 0 0 8px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .card h3 .title-with-dot {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .card h3 .title-with-dot {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .pill {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            color: #475569;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        .meta {
+            margin: 0 0 14px;
+            font-size: 0.8125rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 18px;
+        }
+
+        .kv {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 0.8125rem;
+            line-height: 1.45;
+        }
+
+        .kv .k {
+            color: var(--muted);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+
+        .kv ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .kv li {
+            margin: 4px 0;
+        }
+
+        .track.is-active {
+            outline: 2px solid rgba(37, 99, 235, .4);
+            outline-offset: 2px;
+            background: #e0e7ff;
+        }
+
+        code {
+            font-size: 0.8em;
+            background: #f1f5f9;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-family: ui-monospace, monospace;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 24px 16px;
+            }
+
+            .wrap {
+                padding: 24px 20px;
+            }
+
+            .axis-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .axis-wrap .axis-cell {
+                grid-column: 1;
+            }
+
+            .rows {
+                grid-template-columns: 1fr;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>Phase 1 Timeline</h1>
+        <p class="sub">Feb 25, 2026 → Mar 27, 2026</p>
+
+        <div class="timeline">
+            <!-- Axis: Feb 25 (0) → Mar 27 (30) -->
+            <div class="axis-wrap">
+                <div></div>
+                <div class="axis-cell">
+                    <div class="axis-roles">
+                        <span class="date-role date-role-start">Start</span>
+                        <span class="date-role date-role-end">End</span>
+                    </div>
+                    <div class="axis">
+                        <div class="tick" style="left:0%"></div>
+                        <div class="tick" style="left:23.333%"></div>
+                        <div class="tick" style="left:46.666%"></div>
+                        <div class="tick" style="left:70%"></div>
+                        <div class="tick" style="left:100%"></div>
+                    </div>
+                    <div class="axis-dates">
+                        <div class="date" style="left:0%">Feb 25</div>
+                        <div class="date" style="left:23.333%">Mar 3</div>
+                        <div class="date" style="left:46.666%">Mar 10</div>
+                        <div class="date" style="left:70%">Mar 17</div>
+                        <div class="date" style="left:100%">Mar 27</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rows">
+                <!-- 1. Foundational Platform Work -->
+                <div class="label">
+                    1. Foundational Platform Work
+                    <span class="label-scope">Data model &amp; tenantId · SystemAgents &amp; ToolsCatalog SDK · Evals
+                        catalog ·
+                        AgentGw/VoiceGw in CpaasGateways · Channel events</span>
+                    <span class="status-pill status-impl">Implementation in progress</span>
+                </div>
+                <div class="track" data-focus="foundation">
+                    <div class="bar c-foundation" data-start="0" data-end="21"
+                        title="Foundational Platform Work (→ Mar 17)">
+                    </div>
+                </div>
+
+                <!-- 2. Teams / Workspaces + RBAC -->
+                <div class="label">
+                    2. Teams / Workspaces + RBAC
+                    <span class="label-scope">Team as authoring boundary · RBAC</span>
+                    <span class="status-pill status-ui">UI in progress</span>
+                </div>
+                <div class="track" data-focus="teams">
+                    <div class="bar c-teams" data-start="7" data-end="14"
+                        title="Teams / Workspaces + RBAC (Mar 3 → Mar 10)">
+                    </div>
+                </div>
+
+                <!-- 3. Agent Draft / Publishing -->
+                <div class="label">
+                    3. Agent Draft / Publishing (Versioning Model)
+                    <span class="label-scope">Draft → Snapshot → Publish → TrustGateKeeper validation</span>
+                    <span class="status-pill status-design">Design in progress</span>
+                </div>
+                <div class="track" data-focus="publish">
+                    <div class="bar c-publish" data-start="14" data-end="30"
+                        title="Agent Draft / Publishing (Mar 10 → Mar 27)">
+                    </div>
+                </div>
+
+                <!-- 4. Outbound Engagement (moved up from 6) -->
+                <div class="label">
+                    4. Outbound Engagement
+                    <span class="label-scope">Launch stack · Contact hardening · Deployment/Preview · TCPA/DNC/compliance
+                        UX</span>
+                    <span class="status-pill status-design">Design in progress</span>
+                </div>
+                <div class="track" data-focus="outbound">
+                    <div class="bar c-outbound" data-start="14" data-end="30"
+                        title="Outbound Engagement (Mar 10 → Mar 27)"></div>
+                </div>
+
+                <!-- 5. TrustGateKeeper -->
+                <div class="label">
+                    5. TrustGateKeeper (Publish Validation)
+                    <span class="label-scope">Schema &amp; guardrail checks · Integration health · Block unsafe
+                        publish</span>
+                    <span class="status-pill status-design">Design in progress</span>
+                </div>
+                <div class="track" data-focus="tgg">
+                    <div class="bar c-tgg" data-start="21" data-end="30" title="TrustGateKeeper (Mar 17 → Mar 27)">
+                    </div>
+                </div>
+
+                <!-- 6. Tenant-Level Integration Governance -->
+                <div class="label">
+                    6. Tenant-Level Integration Governance
+                    <span class="label-scope">Tenant integration registry · Dev/Prod · Secrets</span>
+                    <span class="status-pill status-design">Design in progress</span>
+                </div>
+                <div class="track" data-focus="integrations">
+                    <div class="bar c-integrations" data-start="14" data-end="30"
+                        title="Tenant-Level Integration Governance (Mar 10 → Mar 27)"></div>
+                </div>
+
+                <!-- 7. Deterministic Agent (Widget Heavy) -->
+                <div class="label">
+                    7. Deterministic Agent (Widget Heavy)
+                    <span class="label-scope">Outbound · Deterministic/fixed agent execution</span>
+                    <span class="status-pill status-design">TBD</span>
+                </div>
+                <div class="track" data-focus="deterministic" title="Deterministic Agent (Widget Heavy) – TBD">
+                    <!-- No bar: timeline TBD -->
+                </div>
+
+            </div>
+
+            <!-- DETAILS -->
+            <div class="details" id="details">
+                <!-- 1. Foundational Platform Work -->
+                <div class="card" id="card-foundation" data-key="foundation">
+                    <h3><span class="title-with-dot"><span class="card-dot c-foundation"></span>1. Foundational Platform
+                            Work</span><span class="pill">In progress → Mar 17</span></h3>
+                    <p class="meta">
+                        Data model enhancements, UshurPlatformAgent SDK (SystemAgents framework), ToolsCatalog SDK +
+                        Policy
+                        framework, and stabilization/testing. Ensure existing analytics is not impacted <br>Timeline:
+                        Data Model Mar
+                        3 · Service changes
+                        Mar 10 · Testing complete Mar 17.
+                    </p>
+                    <div class="grid">
+                        <div class="kv">
+                            <div class="k">Scope / Workstreams</div>
+                            <ul>
+                                <li><strong>Data Model:</strong> <code>tenantId</code> standardization; removal of
+                                    <code>enterpriseId</code> / <code>platformHost</code> mapping; Control Plane vs
+                                    Runtime Plane
+                                    separation; schema naming standardization; plane ownership &amp; audit trail
+                                    enforcement
+                                </li>
+                                <li><strong>UshurPlatformAgent SDK:</strong> Kernel + engine adapter;
+                                    SystemAgent lifecycle scaffolding</li>
+                                <li><strong>ToolsCatalog SDK + Policy:</strong> Tool metadata definition; policy
+                                    bundles; enforcement
+                                    hooks</li>
+                                <li><strong>Evals catalog:</strong> Catalog and tooling for configurable evaluations
+                                </li>
+                                <li><strong>Channel Gateway Split:</strong> ChatGw and VoiceGw implementation
+                                    in
+                                    CpaasGateways; persisting events in channel collections (Feb 25 → Mar 13)</li>
+                            </ul>
+                        </div>
+                        <div class="kv">
+                            <div class="k">Team</div>
+                            <ul>
+                                <li><strong>Data Model:</strong> Ravil, Aravindh, Chandan, Krupa, Anusha, Chinmayi,
+                                    Aravindh</li>
+                                <li><strong>Core SDK:</strong> Aravindh, Lucky, Krupa, Chinmayi</li>
+                                <li><strong>Channel Gateway Split:</strong> Mayank, Naveena</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Teams / Workspaces + RBAC -->
+                <div class="card" id="card-teams" data-key="teams">
+                    <h3><span class="title-with-dot"><span class="card-dot c-teams"></span>2. Teams / Workspaces +
+                            RBAC</span><span class="pill">Mar 3 → Mar 10</span></h3>
+                    <p class="meta">
+                        Team as authoring boundary; team-scoped ownership, and RBAC; publish approval governance.
+                    </p>
+                    <div class="grid">
+                        <div class="kv">
+                            <div class="k">Scope / Workstreams</div>
+                            <ul>
+                                <li>Team as authoring boundary</li>
+                                <li>Team-scoped ownership</li>
+                                <li>RBAC enforcement</li>
+                                <li>Publish approval governance</li>
+                            </ul>
+                        </div>
+                        <div class="kv">
+                            <div class="k">Team</div>
+                            <div>Ajith, Anusha, Aratrika</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Agent Draft / Publishing -->
+                <div class="card" id="card-publish" data-key="publish">
+                    <h3><span class="title-with-dot"><span class="card-dot c-publish"></span>3. Agent Draft / Publishing
+                        </span><span class="pill">Mar 10 → Mar 27</span></h3>
+                    <p class="meta">
+                        Draft (mutable) → Snapshot (immutable) → Publish with TrustGateKeeper validation; active
+                        snapshot pointer
+                        management; provisioning service + runtime artifact creation. Publish-time: static validation in
+                        Phase 1;
+                        block on critical failures.
+                    </p>
+                    <div class="grid">
+                        <div class="kv">
+                            <div class="k">Scope / Workstreams</div>
+                            <ul>
+                                <li>Draft (mutable) · Snapshot (immutable)</li>
+                                <li>Publish → TrustGateKeeper validation</li>
+                                <li>Active snapshot pointer management</li>
+                                <li>Provisioning service + runtime artifact creation</li>
+                            </ul>
+                        </div>
+                        <div class="kv">
+                            <div class="k">Team</div>
+                            <div>Ravil, Aravindh, Ajith, Aratrika, Anusha</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Outbound Engagement -->
+                <div class="card" id="card-outbound" data-key="outbound">
+                    <h3><span class="title-with-dot"><span class="card-dot c-outbound"></span>4. Outbound
+                            Engagement</span><span class="pill">Mar 10 → Mar 27</span></h3>
+                    <p class="meta">
+                        Launch config &amp; execution stack, contact platform hardening, agent deployment + preview
+                        pipeline, and
+                        compliance engine hardening.
+                    </p>
+                    <div class="grid">
+                        <div class="kv">
+                            <div class="k">Scope / Workstreams</div>
+                            <ul>
+                                <li><strong>1 – Launch Config + Execution Stack:</strong> Real SMS execution; launch
+                                    queue + retry
+                                    engine; launch analytics; agent outbound invocation</li>
+                                <li><strong>2 – Contact Platform Hardening:</strong> CSV upload + mapping; fuzzy
+                                    matching; group
+                                    management; merge audit logs</li>
+                                <li><strong>3 – Agent Deployment + Preview Pipeline:</strong> Greeting configuration;
+                                    runtime parameter
+                                    passing; preview simulation engine</li>
+                                <li><strong>4 – Compliance Engine Hardening:</strong> TCPA enforcement; DND enforcement;
+                                    quiet hours;
+                                    validation UX (pass / warn / fail panel)</li>
+                            </ul>
+                        </div>
+                        <div class="kv">
+                            <div class="k">Team</div>
+                            <ul>
+                                <li><strong>Launch / Outbound:</strong> Krupa, Naveena, Prakhar, Lucky</li>
+                                <li><strong>Compliance UX:</strong> Aravindh, Lucky, Chandan, Naveena, Prakhar</li>
+                                <li><strong>Deployment / Preview:</strong> Lucky, Mayank, Naveena, Prakhar</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. TrustGateKeeper (Publish Validation) -->
+                <div class="card" id="card-tgg" data-key="tgg">
+                    <h3><span class="title-with-dot"><span class="card-dot c-tgg"></span>5. TrustGateKeeper (Publish
+                            Validation)</span><span class="pill">Mar 17 → Mar 27</span></h3>
+                    <p class="meta">
+                        Schema conformance checks; guardrail validation; integration health checks; RBAC validation;
+                        block unsafe
+                        publishes.
+                    </p>
+                    <div class="grid">
+                        <div class="kv">
+                            <div class="k">Scope / Workstreams</div>
+                            <ul>
+                                <li>Schema conformance checks</li>
+                                <li>Guardrail validation</li>
+                                <li>Integration health checks</li>
+                                <li>RBAC validation</li>
+                                <li>Block unsafe publishes</li>
+                            </ul>
+                        </div>
+                        <div class="kv">
+                            <div class="k">Team</div>
+                            <div>Anusha, Ajith, Ravil</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Tenant-Level Integration Governance -->
+                <div class="card" id="card-integrations" data-key="integrations">
+                    <h3><span class="title-with-dot"><span class="card-dot c-integrations"></span>6. Tenant-Level
+                            Integration
+                            Governance</span><span class="pill">Mar 10 · Mar 27</span></h3>
+                    <p class="meta">
+                        Tenant-scoped integration registry; dev vs prod separation; secure secret storage.
+                    </p>
+                    <div class="grid">
+                        <div class="kv">
+                            <div class="k">Scope / Workstreams</div>
+                            <ul>
+                                <li>Tenant-scoped integration registry</li>
+                                <li>Dev vs Prod integration separation</li>
+                                <li>Secure secret storage</li>
+                            </ul>
+                        </div>
+                        <div class="kv">
+                            <div class="k">Team</div>
+                            <div>Anusha, Ajith, Ravil</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Deterministic Agent (Widget Heavy) -->
+                <div class="card" id="card-deterministic" data-key="deterministic">
+                    <h3><span class="title-with-dot"><span class="card-dot c-deterministic"></span>7. Deterministic
+                            Agent (Widget Heavy)</span><span class="pill">TBD</span></h3>
+                    <p class="meta">
+                        <strong>Category/Feature:</strong> Outbound · <strong>Objective:</strong> Deterministic/fixed
+                        agent execution.
+                    </p>
+                    <div class="grid">
+                        <div class="kv">
+                            <div class="k">Scope / Workstreams</div>
+                            <ul>
+                                <li>TBD</li>
+                            </ul>
+                        </div>
+                        <div class="kv">
+                            <div class="k">Team</div>
+                            <div>TBD</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Position bars by day offsets
+        (function () {
+            const SPAN = 30; // 0..30
+            document.querySelectorAll('.bar[data-start][data-end]').forEach(bar => {
+                const start = Number(bar.getAttribute('data-start'));
+                const end = Number(bar.getAttribute('data-end'));
+                bar.style.left = (start / SPAN) * 100 + '%';
+                bar.style.width = ((end - start) / SPAN) * 100 + '%';
+            });
+        })();
+
+        // Click-to-focus and scroll
+        (function () {
+            const tracks = Array.from(document.querySelectorAll('.track'));
+            const map = {
+                foundation: document.getElementById('card-foundation'),
+                teams: document.getElementById('card-teams'),
+                publish: document.getElementById('card-publish'),
+                tgg: document.getElementById('card-tgg'),
+                integrations: document.getElementById('card-integrations'),
+                outbound: document.getElementById('card-outbound'),
+                deterministic: document.getElementById('card-deterministic'),
+            };
+
+            function clearActive() { tracks.forEach(t => t.classList.remove('is-active')); }
+
+            tracks.forEach(track => {
+                track.addEventListener('click', () => {
+                    const key = track.getAttribute('data-focus');
+                    clearActive();
+                    track.classList.add('is-active');
+                    const card = map[key];
+                    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>
