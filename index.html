@@ -266,7 +266,6 @@
             box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
         }
 
-        /* Timeline bar colors – distinct palette (blue, emerald, amber, cyan, violet, rose) */
         .c-foundation {
             background: #2563eb;
         }
@@ -293,6 +292,10 @@
 
         .c-deterministic {
             background: #0f766e;
+        }
+
+        .c-hipaa {
+            background: #dc2626;
         }
 
         .details {
@@ -446,7 +449,6 @@
         <p class="sub">Feb 25, 2026 → Mar 27, 2026</p>
 
         <div class="timeline">
-            <!-- Axis: Feb 25 (0) → Mar 27 (30) -->
             <div class="axis-wrap">
                 <div></div>
                 <div class="axis-cell">
@@ -472,7 +474,6 @@
             </div>
 
             <div class="rows">
-                <!-- 1. Foundational Platform Work -->
                 <div class="label">
                     1. Foundational Platform Work
                     <span class="label-scope">Data model &amp; tenantId · SystemAgents &amp; ToolsCatalog SDK · Evals
@@ -486,7 +487,6 @@
                     </div>
                 </div>
 
-                <!-- 2. Teams / Workspaces + RBAC -->
                 <div class="label">
                     2. Teams / Workspaces + RBAC
                     <span class="label-scope">Team as authoring boundary · RBAC</span>
@@ -498,11 +498,10 @@
                     </div>
                 </div>
 
-                <!-- 3. Agent Draft / Publishing -->
                 <div class="label">
                     3. Agent Draft / Publishing (Versioning Model)
                     <span class="label-scope">Draft → Snapshot → Publish → TrustGateKeeper validation</span>
-                    <span class="status-pill status-design">Design in progress</span>
+                    <span class="status-pill status-impl">Implementation in progress</span>
                 </div>
                 <div class="track" data-focus="publish">
                     <div class="bar c-publish" data-start="14" data-end="30"
@@ -510,19 +509,17 @@
                     </div>
                 </div>
 
-                <!-- 4. Outbound Engagement (moved up from 6) -->
                 <div class="label">
                     4. Outbound Engagement
                     <span class="label-scope">Launch stack · Contact hardening · Deployment/Preview · TCPA/DNC/compliance
                         UX</span>
-                    <span class="status-pill status-design">Design in progress</span>
+                    <span class="status-pill status-impl">Implementation in progress</span>
                 </div>
                 <div class="track" data-focus="outbound">
                     <div class="bar c-outbound" data-start="14" data-end="30"
                         title="Outbound Engagement (Mar 10 → Mar 27)"></div>
                 </div>
 
-                <!-- 5. TrustGateKeeper -->
                 <div class="label">
                     5. TrustGateKeeper (Publish Validation)
                     <span class="label-scope">Schema &amp; guardrail checks · Integration health · Block unsafe
@@ -534,7 +531,6 @@
                     </div>
                 </div>
 
-                <!-- 6. Tenant-Level Integration Governance -->
                 <div class="label">
                     6. Tenant-Level Integration Governance
                     <span class="label-scope">Tenant integration registry · Dev/Prod · Secrets</span>
@@ -545,21 +541,27 @@
                         title="Tenant-Level Integration Governance (Mar 10 → Mar 27)"></div>
                 </div>
 
-                <!-- 7. Deterministic Agent (Widget Heavy) -->
                 <div class="label">
                     7. Deterministic Agent (Widget Heavy)
                     <span class="label-scope">Outbound · Deterministic/fixed agent execution</span>
                     <span class="status-pill status-design">TBD</span>
                 </div>
                 <div class="track" data-focus="deterministic" title="Deterministic Agent (Widget Heavy) – TBD">
-                    <!-- No bar: timeline TBD -->
+                </div>
+
+                <div class="label">
+                    8. HIPAA Compliance
+                    <span class="label-scope">PHI safeguards · audit logging · access controls · encryption · compliance validation</span>
+                    <span class="status-pill status-design">Design in progress</span>
+                </div>
+                <div class="track" data-focus="hipaa">
+                    <div class="bar c-hipaa" data-start="14" data-end="30"
+                        title="HIPAA Compliance (Mar 10 → Mar 27)"></div>
                 </div>
 
             </div>
 
-            <!-- DETAILS -->
             <div class="details" id="details">
-                <!-- 1. Foundational Platform Work -->
                 <div class="card" id="card-foundation" data-key="foundation">
                     <h3><span class="title-with-dot"><span class="card-dot c-foundation"></span>1. Foundational Platform
                             Work</span><span class="pill">In progress → Mar 17</span></h3>
@@ -605,7 +607,6 @@
                     </div>
                 </div>
 
-                <!-- 2. Teams / Workspaces + RBAC -->
                 <div class="card" id="card-teams" data-key="teams">
                     <h3><span class="title-with-dot"><span class="card-dot c-teams"></span>2. Teams / Workspaces +
                             RBAC</span><span class="pill">Mar 3 → Mar 10</span></h3>
@@ -629,7 +630,6 @@
                     </div>
                 </div>
 
-                <!-- 3. Agent Draft / Publishing -->
                 <div class="card" id="card-publish" data-key="publish">
                     <h3><span class="title-with-dot"><span class="card-dot c-publish"></span>3. Agent Draft / Publishing
                         </span><span class="pill">Mar 10 → Mar 27</span></h3>
@@ -657,7 +657,6 @@
                     </div>
                 </div>
 
-                <!-- 4. Outbound Engagement -->
                 <div class="card" id="card-outbound" data-key="outbound">
                     <h3><span class="title-with-dot"><span class="card-dot c-outbound"></span>4. Outbound
                             Engagement</span><span class="pill">Mar 10 → Mar 27</span></h3>
@@ -695,7 +694,6 @@
                     </div>
                 </div>
 
-                <!-- 5. TrustGateKeeper (Publish Validation) -->
                 <div class="card" id="card-tgg" data-key="tgg">
                     <h3><span class="title-with-dot"><span class="card-dot c-tgg"></span>5. TrustGateKeeper (Publish
                             Validation)</span><span class="pill">Mar 17 → Mar 27</span></h3>
@@ -722,7 +720,6 @@
                     </div>
                 </div>
 
-                <!-- 6. Tenant-Level Integration Governance -->
                 <div class="card" id="card-integrations" data-key="integrations">
                     <h3><span class="title-with-dot"><span class="card-dot c-integrations"></span>6. Tenant-Level
                             Integration
@@ -746,7 +743,6 @@
                     </div>
                 </div>
 
-                <!-- 7. Deterministic Agent (Widget Heavy) -->
                 <div class="card" id="card-deterministic" data-key="deterministic">
                     <h3><span class="title-with-dot"><span class="card-dot c-deterministic"></span>7. Deterministic
                             Agent (Widget Heavy)</span><span class="pill">TBD</span></h3>
@@ -768,14 +764,38 @@
                     </div>
                 </div>
 
+                <div class="card" id="card-hipaa" data-key="hipaa">
+                    <h3><span class="title-with-dot"><span class="card-dot c-hipaa"></span>8. HIPAA
+                            Compliance</span><span class="pill">Mar 10 → Mar 27</span></h3>
+                    <p class="meta">
+                        HIPAA readiness for healthcare-sensitive workflows including PHI protection, auditability,
+                        access governance, and secure data handling across authoring, publishing, and runtime flows.
+                    </p>
+                    <div class="grid">
+                        <div class="kv">
+                            <div class="k">Scope / Workstreams</div>
+                            <ul>
+                                <li>PHI data classification and handling guardrails</li>
+                                <li>Access controls and role-based restrictions for sensitive data</li>
+                                <li>Audit logging for PHI access, changes, and publish activity</li>
+                                <li>Encryption and secure storage requirements validation</li>
+                                <li>Compliance checks integrated into publish and runtime workflows</li>
+                            </ul>
+                        </div>
+                        <div class="kv">
+                            <div class="k">Team</div>
+                            <div>Kunal, Chandan, Chandra</div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
     <script>
-        // Position bars by day offsets
         (function () {
-            const SPAN = 30; // 0..30
+            const SPAN = 30;
             document.querySelectorAll('.bar[data-start][data-end]').forEach(bar => {
                 const start = Number(bar.getAttribute('data-start'));
                 const end = Number(bar.getAttribute('data-end'));
@@ -784,7 +804,6 @@
             });
         })();
 
-        // Click-to-focus and scroll
         (function () {
             const tracks = Array.from(document.querySelectorAll('.track'));
             const map = {
@@ -795,6 +814,7 @@
                 integrations: document.getElementById('card-integrations'),
                 outbound: document.getElementById('card-outbound'),
                 deterministic: document.getElementById('card-deterministic'),
+                hipaa: document.getElementById('card-hipaa'),
             };
 
             function clearActive() { tracks.forEach(t => t.classList.remove('is-active')); }
