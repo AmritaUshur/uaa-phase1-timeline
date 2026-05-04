@@ -1,0 +1,26 @@
+gantt
+    title PLG Critical Path Timeline — Ending May 30, 2026
+    dateFormat  YYYY-MM-DD
+    axisFormat  %b %d
+
+    section Critical Path
+    Platform Reliability     :crit, active, pr, 2026-05-04, 2026-05-15
+    Contact Profiling V1     :crit, cp, after pr, 5d
+    Ushur Assist Core        :crit, ua, after cp, 8d
+    Self-Serve Readiness     :crit, ss, after ua, 4d
+    PLG Launch Readiness     :crit, milestone, launch, 2026-05-30, 0d
+
+    section Parallel Workstreams
+    Agent Purpose Based Metric :analytics, 2026-05-08, 2026-05-18
+    Agent & Outbound UX Enhancements :ux, 2026-05-13, 2026-05-26
+    Use Case Library - Light :library, 2026-05-12, 2026-05-20
+    Autonomous Onboarding    :onboarding, 2026-05-15, 2026-05-27
+    Support                  :support, 2026-05-18, 2026-05-28
+    Metering / Usage         :metering, 2026-05-20, 2026-05-29
+    PHI/PII Masking          :masking, 2026-05-20, 2026-05-29
+
+    section Ushur Assist Detail
+    Agent Building           :2026-05-13, 2026-05-23
+    Launch Manager           :2026-05-16, 2026-05-26
+    Product Q&A              :2026-05-16, 2026-05-26
+    Agent Evaluation         :2026-05-18, 2026-05-28
